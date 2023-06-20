@@ -34,12 +34,21 @@ public class LibraryController {
         return iLibraryService.getAllBooks();
     }
 
+    /**
+     * This controller getSpecificsBookByName() uses to return the all books that starts with parameter and return to Frontend.
+     * @param name
+     * @return A list of books.
+     */
     @GetMapping("/books/search")
     public List<Book> getSpecificsBookByName(@RequestParam String name){
         logger.info("Accessing to the service iLibraryService to get all books by name and return to Frontend.");
         return iLibraryService.getSpecificsBookByName(name);
     }
 
+    /**
+     * This controller addBook() insert a new book from Frontend to bbdd.
+     * @param book
+     */
     @PostMapping("/books/add")
     public void addBook(@RequestBody Book book){
         try{
@@ -63,7 +72,10 @@ public class LibraryController {
             return new ResponseEntity<>(e.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
         }*/
 
-
+    /**
+     * This controller delete a book with id
+     * @param id
+     */
     @DeleteMapping("/books/delete/{id}")
     public void deleteBook(@PathVariable Long id){
         try{

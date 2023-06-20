@@ -5,6 +5,7 @@ import library.library.persistences.entities.Books;
 import library.library.persistences.repositories.BooksRepository;
 import library.library.services.businesslogic.ILibraryService;
 import library.library.services.models.Book;
+import library.library.utils.Constants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,10 @@ public class LibraryServicesImpl implements ILibraryService {
     @Autowired
     private BooksRepository booksRepository;
 
+    /**
+     * This function return a list with all books into bbdd.
+     * @return List<Book>
+     */
     @Override
     public List<Book> getAllBooks() {
         try{
@@ -39,6 +44,11 @@ public class LibraryServicesImpl implements ILibraryService {
         }
     }
 
+    /**
+     * This function return a list of books that name starts with parameters that you insert by frontend.
+     * @param name of book
+     * @return List<Book>
+     */
     @Override
     public List<Book> getSpecificsBookByName(String name) {
         try {
@@ -57,6 +67,10 @@ public class LibraryServicesImpl implements ILibraryService {
         }
     }
 
+    /**
+     * This function save a book into de bbdd with a previous validation.
+     * @param book
+     */
     @Override
     public void saveBook(Book book) {
         try{
@@ -72,6 +86,10 @@ public class LibraryServicesImpl implements ILibraryService {
         }
     }
 
+    /**
+     * This function delete a book by id.
+     * @param id
+     */
     @Override
     public void deleteBook(Long id) {
         try{
@@ -84,38 +102,43 @@ public class LibraryServicesImpl implements ILibraryService {
         }
     }
 
+    /**
+     * Funcion to validate a new book before to insert into bbdd.
+     * @param book
+     */
     private void bookValidation(Book book){
         try{
             if(book.getName() == null || book.getName().isEmpty()){
-                logger.error("The books name is null or empty.");
-                throw new NullPointerException("The books name is null or empty.");
+                logger.error("The book name is null or empty.");
+                throw new NullPointerException(Constants.NULL_EXCEPTION_ERROR.concat("name"));
             }
 
             if(book.getAuthor() == null || book.getAuthor().isEmpty()){
-                logger.error("The books author is null or empty.");
-                throw new NullPointerException("The books author is null or empty.");
+                logger.error("The book author is null or empty.");
+                throw new NullPointerException(Constants.NULL_EXCEPTION_ERROR.concat("author"));
             }
 
             if(book.getIsbn() == null || book.getIsbn().isEmpty()){
-                logger.error("The books isbn is null or empty.");
-                throw new NullPointerException("The books isbn is null or empty.");
+                logger.error("The book isbn is null or empty.");
+                throw new NullPointerException(Constants.NULL_EXCEPTION_ERROR.concat("isbn"));
             }else {
                 if(book.getIsbn().length()<13 || book.getIsbn().length()>13){
                     logger.error("The isbn of the book has more than 13 or less than 13 digits allowed.");
-                    throw new IndexOutOfBoundsException("The isbn of the book has more than 13 or less than 13 digits allowed.");
+                    throw new IndexOutOfBoundsException(Constants.LENGTS_EXCEPTION_ERROR);
                 }
             }
 
             if(book.getPublisher() == null || book.getPublisher().isEmpty()){
-                logger.error("The books publisher is null or empty.");
-                throw new NullPointerException("The books publisher is null or empty.");
+                logger.error("The book publisher is null or empty.");
+                throw new NullPointerException(Constants.NULL_EXCEPTION_ERROR.concat("publisher"));
             }
 
             if(book.getDate() == null || book.getDate().isEmpty()){
-                logger.error("The books date is null or empty.");
-                throw new NullPointerException("The books date is null or empty.");
+                logger.error("The book date is null or empty.");
+                throw new NullPointerException(Constants.NULL_EXCEPTION_ERROR.concat("date"));
             }
         }catch (Exception e){
+            logger.error(e.getMessage());
             throw e;
         }
 
