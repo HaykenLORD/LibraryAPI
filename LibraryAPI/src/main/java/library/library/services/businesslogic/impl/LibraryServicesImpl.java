@@ -29,7 +29,7 @@ public class LibraryServicesImpl implements ILibraryService {
             List<Books> booksBBDD = booksRepository.findAll();
             logger.info("Iterate the books entity and putting into the list for return.");
             booksBBDD.stream().forEach(books -> {
-                Book book = new Book(books.getName(),books.getAuthor(),books.getIsbn(),books.getEditorial(),books.getDate());
+                Book book = new Book(books.getId(),books.getName(),books.getAuthor(),books.getIsbn(),books.getPublisher(),books.getDate());
                 bookList.add(book);
             });
             return bookList;
@@ -47,7 +47,7 @@ public class LibraryServicesImpl implements ILibraryService {
             List<Books> booksBBDD = booksRepository.findAllBooksByName(name);
             logger.info("Iterate the books entity and putting into the list for return.");
             booksBBDD.stream().forEach(books -> {
-                Book book = new Book(books.getName(),books.getAuthor(),books.getIsbn(),books.getEditorial(),books.getDate());
+                Book book = new Book(books.getId(),books.getName(),books.getAuthor(),books.getIsbn(),books.getPublisher(),books.getDate());
                 bookList.add(book);
             });
             return bookList;
@@ -68,6 +68,18 @@ public class LibraryServicesImpl implements ILibraryService {
             logger.info("The book is saved into books repository.");
         }catch (Exception e){
             logger.error("The exception occurred while book is saving or validating in bookValidation() function.");
+            throw e;
+        }
+    }
+
+    @Override
+    public void deleteBook(Long id) {
+        try{
+            logger.info("Prepare to delete the book from books repository.");
+            booksRepository.deleteById(id);
+            logger.info("The book with id: {} is deleted from books repository.",id);
+        }catch (Exception e){
+            logger.error("The exception occurred while book is deleting.");
             throw e;
         }
     }
@@ -96,7 +108,7 @@ public class LibraryServicesImpl implements ILibraryService {
 
             if(book.getPublisher() == null || book.getPublisher().isEmpty()){
                 logger.error("The books publisher is null or empty.");
-                throw new NullPointerException("The books editorial is null or empty.");
+                throw new NullPointerException("The books publisher is null or empty.");
             }
 
             if(book.getDate() == null || book.getDate().isEmpty()){

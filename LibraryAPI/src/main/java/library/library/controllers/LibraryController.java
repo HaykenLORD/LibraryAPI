@@ -43,7 +43,7 @@ public class LibraryController {
     @PostMapping("/books/add")
     public void addBook(@RequestBody Book book){
         try{
-            logger.info("Accessing to the service iLibraryService to save a book added return status to Frontend.");
+            logger.info("Accessing to the service iLibraryService to save a book.");
             iLibraryService.saveBook(book);
         }catch (Exception e){
             logger.error(e.getMessage());
@@ -63,5 +63,17 @@ public class LibraryController {
             return new ResponseEntity<>(e.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
         }*/
 
+
+    @DeleteMapping("/books/delete/{id}")
+    public void deleteBook(@PathVariable Long id){
+        try{
+            logger.info("Accessing to the service iLibraryService to delete a book.");
+            iLibraryService.deleteBook(id);
+        }catch (Exception e){
+            logger.error(e.getMessage());
+            throw e;
+        }
+
+    }
 
 }

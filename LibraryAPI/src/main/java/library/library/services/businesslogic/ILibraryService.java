@@ -12,4 +12,6 @@ public interface ILibraryService {
 
     public void saveBook(Book book);
 
+    public void deleteBook(Long id);
+
 }

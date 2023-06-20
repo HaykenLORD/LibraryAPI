@@ -3,7 +3,6 @@ package library.library.persistences.entities;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
-import java.util.Date;
 
 @Entity
 @Table(name = "books")
@@ -19,19 +18,19 @@ public class Books implements Serializable {
     private String author;
     @Column(name = "isbn")
     private String isbn;
-    @Column(name = "editorial")
-    private String editorial;
+    @Column(name = "publisher")
+    private String publisher;
     @Column(name = "date")
     private String date;
 
     public Books() {
     }
 
-    public Books(String name, String author, String isbn, String editorial, String date) {
+    public Books(String name, String author, String isbn, String publisher, String date) {
         this.name = name;
         this.author = author;
         this.isbn = isbn;
-        this.editorial = editorial;
+        this.publisher = publisher;
         this.date = date;
     }
 
@@ -67,12 +66,12 @@ public class Books implements Serializable {
         this.isbn = isbn;
     }
 
-    public String getEditorial() {
-        return editorial;
+    public String getPublisher() {
+        return publisher;
     }
 
-    public void setEditorial(String editorial) {
-        this.editorial = editorial;
+    public void setPublisher(String publisher) {
+        this.publisher = publisher;
     }
 
     public String getDate() {
